@@ -19,7 +19,7 @@ public class TblUserController {
     @RequestMapping(value = "/getUserById", method = RequestMethod.GET)
     public FleshResult getUserById(@RequestParam int userId) {
         TblUser tblUser = tblUserService.getUserById(userId);
-        return new FleshResult("0", tblUser);
+        return new FleshResult("0","接口调用成功", tblUser);
     }
 
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)

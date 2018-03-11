@@ -17,7 +17,7 @@ public class FleshResult <T>{
         this.msg = msg;
     }
 
-    public FleshResult(String code, T data) {
+    public FleshResult(String code, String msg,T data) {
         this.code = code;
         this.msg = msg;
         this.data = data;
