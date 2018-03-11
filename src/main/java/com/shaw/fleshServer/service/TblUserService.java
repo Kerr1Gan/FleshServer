@@ -5,4 +5,6 @@ import com.shaw.fleshServer.entity.TblUser;
 public interface TblUserService {
     public TblUser getUserById(int userId);
     public int addUser(TblUser tblUser);
+    int updateUser(TblUser user);
+    TblUser getUserByDeviceId(String deviceId);
 }

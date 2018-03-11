@@ -6,8 +6,10 @@ import com.shaw.fleshServer.service.TblUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
+
 @Service
-public class TblUserServiceImpl implements TblUserService{
+public class TblUserServiceImpl implements TblUserService, Serializable  {
 
     @Autowired
     private TblUserMapper tblUserMapper;
@@ -19,6 +21,16 @@ public class TblUserServiceImpl implements TblUserService{
 
     @Override
     public int addUser(TblUser tblUser) {
-        return 0;
+        return tblUserMapper.addUser(tblUser);
+    }
+
+    @Override
+    public int updateUser(TblUser user) {
+        return tblUserMapper.updateUser(user);
+    }
+
+    @Override
+    public TblUser getUserByDeviceId(String deviceId) {
+        return tblUserMapper.getUserByDeviceId(deviceId);
     }
 }

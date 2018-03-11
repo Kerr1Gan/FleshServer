@@ -20,6 +20,10 @@ public class TblUser {
      * 是否vip用户（0：否，1：是）
      */
     private String isVip;
+    /**
+     * 设备Id
+     */
+    private String deviceId;
 
     public String getUserId() {
         return userId;
@@ -51,5 +55,13 @@ public class TblUser {
 
     public void setIsVip(String isVip) {
         this.isVip = isVip;
+    }
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
     }
 }

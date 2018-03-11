@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.shaw.fleshServer.mapper.TblUserMapper">
-
     <resultMap id="BaseResultMap" type="com.shaw.fleshServer.entity.TblUser">
-        <id column="user_id" property="userId" jdbcType="BIGINT" />
-        <id column="user_name" property="userName" jdbcType="VARCHAR" />
-        <result column="password" property="password" jdbcType="VARCHAR" />
+        <id column="user_id" property="userId" jdbcType="BIGINT"/>
+        <id column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
         <result column="is_vip" property="isVip" jdbcType="VARCHAR"/>
+        <result column="device_id" property="deviceId" jdbcType="VARCHAR"/>
     </resultMap>
 
     <select id="getUserList" resultMap="BaseResultMap">
@@ -17,7 +17,15 @@
         SELECT * FROM tbl_user WHERE user_id = #{userId}
     </select>
 
-    <delete id="deleteScoreById" parameterType="int">
-        DELETE from tbl_score where score_id = #{scoreId};
-    </delete>
+    <select id="getUserByDeviceId" parameterType="String" resultMap="BaseResultMap">
+        SELECT * from tbl_user WHERE device_id = #{deviceId}
+    </select>
+
+    <insert id="addUser" parameterType="com.shaw.fleshServer.entity.TblUser">
+        INSERT INTO tbl_user(user_id,user_name,password,is_vip,device_id)  VALUES (#{userId},#{userName},#{password},#{isVip},#{deviceId})
+    </insert>
+
+    <update id="updateUser" parameterType="com.shaw.fleshServer.entity.TblUser">
+        UPDATE tbl_user SET  user_name = #{userName},password=#{password},is_vip=#{isVip} WHERE device_id = #{deviceId}
+    </update>
 </mapper>
