@@ -3,6 +3,8 @@ package com.shaw.fleshServer.controller;
 import com.shaw.fleshServer.base.common.FleshResult;
 import com.shaw.fleshServer.entity.TblUser;
 import com.shaw.fleshServer.service.TblUserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api")
 public class TblUserController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(TblUser.class);
 
     @Autowired
     private TblUserService tblUserService;
