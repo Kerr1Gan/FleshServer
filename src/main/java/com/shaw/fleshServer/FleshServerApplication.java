@@ -35,25 +35,25 @@ public class FleshServerApplication extends SpringBootServletInitializer {
         return builder.sources(FleshServerApplication.class);
     }
 
-    public static void executeSql() {
-        Connection connection = null;
-        try {
-            Class.forName("org.gjt.mm.mysql.Driver").newInstance();
-            connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/flesh", "root", "");
-            ScriptRunner runner = new ScriptRunner(connection);
-            runner.setAutoCommit(false);
-            runner.setSendFullScript(true);
-
-            runner.runScript(new StringReader(new SQL().toString()));
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                }
-            }
-        }
-    }
+//    public static void executeSql() {
+//        Connection connection = null;
+//        try {
+//            Class.forName("org.gjt.mm.mysql.Driver").newInstance();
+//            connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/flesh", "root", "");
+//            ScriptRunner runner = new ScriptRunner(connection);
+//            runner.setAutoCommit(false);
+//            runner.setSendFullScript(true);
+//
+//            runner.runScript(new StringReader(new SQL().toString()));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            if (connection != null) {
+//                try {
+//                    connection.close();
+//                } catch (SQLException e) {
+//                }
+//            }
+//        }
+//    }
 }

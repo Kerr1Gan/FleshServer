@@ -25,6 +25,8 @@ public class TblUser {
      */
     private String deviceId;
 
+    private String paymentId;
+
     public String getUserId() {
         return userId;
     }
@@ -63,5 +65,13 @@ public class TblUser {
 
     public void setDeviceId(String deviceId) {
         this.deviceId = deviceId;
+    }
+
+    public String getPaymentId() {
+        return paymentId;
+    }
+
+    public void setPaymentId(String paymentId) {
+        this.paymentId = paymentId;
     }
 }
