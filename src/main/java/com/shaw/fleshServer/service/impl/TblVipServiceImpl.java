@@ -11,6 +11,7 @@ import com.shaw.fleshServer.utils.PayPalVerifyPayment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("Duplicates")
 @Service
 public class TblVipServiceImpl implements TblVipService {
 
@@ -18,11 +19,27 @@ public class TblVipServiceImpl implements TblVipService {
     private TblUserMapper userMapper;
 
     @Override
-    public boolean isPaySuccess(String paymentId) {
+    public boolean isPaySuccess(String deviceId, String paymentId) {
         PayPalVerifyPayment payment = new PayPalVerifyPayment();
         int success = 0;
         try {
             success = payment.verifyPayment(paymentId, 5.0);
+            if (success == 1) {
+                TblUser user = userMapper.getUserByDeviceId(deviceId);
+                if (user != null) {
+                    user.setIsVip("1");
+                    user.setPaymentId(paymentId);
+                    userMapper.updateUser(user);
+                } else {
+                    user = new TblUser();
+                    user.setUserName("");
+                    user.setIsVip("1");
+                    user.setPassword("");
+                    user.setDeviceId(deviceId);
+                    user.setPaymentId(paymentId);
+                    userMapper.addUser(user);
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -42,6 +59,7 @@ public class TblVipServiceImpl implements TblVipService {
                     TblUser user = userMapper.getUserByDeviceId(deviceId);
                     if (user != null) {
                         user.setIsVip("1");
+                        user.setDeviceId(deviceId);
                         user.setPaymentId(payment.getConfirm().getResponse().getId());
                         userMapper.updateUser(user);
                     } else {
