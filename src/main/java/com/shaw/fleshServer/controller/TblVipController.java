@@ -38,8 +38,8 @@ public class TblVipController {
     }
 
     @RequestMapping(value = "/isPaySuccess", method = {RequestMethod.GET, RequestMethod.POST})
-    public FleshResult isPaySuccess(@RequestParam String deviceId, @RequestParam String paymentJson) {
-        boolean result = tblVipService.isPaySuccess(deviceId, paymentJson);
+    public FleshResult isPaySuccess(@RequestParam String deviceId, @RequestParam String paymentId) {
+        boolean result = tblVipService.isPaySuccess(deviceId, paymentId);
         return new FleshResult(result == true ? "0" : "-1", "", result);
     }
 

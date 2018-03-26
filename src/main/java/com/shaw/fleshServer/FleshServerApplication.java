@@ -8,6 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.StringReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
