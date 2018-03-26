@@ -12,7 +12,6 @@ import java.util.List;
 public class XKorean2Json {
 
     public static void main(String[] args) {
-        SeleniumEngine.initEngine(SeleniumEngine.DRIVE_PATH);
         List<XKoreanModel> xkoreanModels;
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(".\\res\\xkorean"))) {
             xkoreanModels = (List<XKoreanModel>) in.readObject();
