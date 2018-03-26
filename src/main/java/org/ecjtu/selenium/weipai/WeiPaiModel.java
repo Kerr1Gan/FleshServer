@@ -1,6 +1,10 @@
 package org.ecjtu.selenium.weipai;
 
+import org.ecjtu.selenium.ofo91.OfO91Model;
+
 import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
 
 public class WeiPaiModel implements Serializable {
 
@@ -58,5 +62,10 @@ public class WeiPaiModel implements Serializable {
             return this.videoUrl.equals(local.videoUrl);
         }
         return super.equals(obj);
+    }
+
+    public static Map<String,List<OfO91Model>> parseFromJson(String json){
+
+        return null;
     }
 }
