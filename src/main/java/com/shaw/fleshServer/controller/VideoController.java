@@ -18,9 +18,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Method;
 
+@SuppressWarnings("Duplicates")
 @RestController
 @RequestMapping("/api")
 public class VideoController {
+
+    private JsonArray jV33JsonArray;
 
     @RequestMapping(value = "/getVideoList", method = {RequestMethod.GET, RequestMethod.POST})
     public FleshResult getVideoList(HttpServletRequest request, HttpServletResponse response,
@@ -41,34 +44,89 @@ public class VideoController {
     public Object v33(int page, int index, int length) {
         String path = ResourceUtil.getResourcePath();
         ByteArrayOutputStream os = new ByteArrayOutputStream();
-        try (FileInputStream reader = new FileInputStream(new File(path, "v33a.json"))) {
-            byte[] temp = new byte[1024 * 10];
-            int len;
-            while ((len = reader.read(temp, 0, temp.length)) > 0) {
-                os.write(temp, 0, len);
-            }
-            JsonArray jArray = new Gson().fromJson(os.toString("utf-8"), JsonArray.class);
-            JsonObject jPage = jArray.get(page).getAsJsonObject();
-            String title = jPage.get("title").getAsString();
-            JsonArray jList = jPage.get("list").getAsJsonArray();
+        System.out.println("VideoController v33 array " + (jV33JsonArray != null ? this.toString() : "null"));
+        if (jV33JsonArray == null) {
+            try (FileInputStream reader = new FileInputStream(new File(path, "v33a.json"))) {
+                byte[] temp = new byte[1024 * 10];
+                int len;
+                while ((len = reader.read(temp, 0, temp.length)) > 0) {
+                    os.write(temp, 0, len);
+                }
+                JsonArray jArray = new Gson().fromJson(os.toString("utf-8"), JsonArray.class);
+                JsonArray ret = new JsonArray();
+                if (page >= 0) {
+                    JsonObject jPage = jArray.get(page).getAsJsonObject();
+                    String title = jPage.get("title").getAsString();
+                    JsonArray jList = jPage.get("list").getAsJsonArray();
 
+                    JsonArray retArray = new JsonArray();
+                    for (int i = index; i < index + length && i < jList.size(); i++) {
+                        retArray.add(jList.get(i).getAsJsonObject());
+                    }
+                    JsonObject item = new JsonObject();
+                    item.addProperty("title", title);
+                    item.add("list", retArray);
+                    ret.add(item);
+                } else {
+                    for (int j = 0; j < jArray.size(); j++) {
+                        JsonObject jPage = jArray.get(j).getAsJsonObject();
+                        String title = jPage.get("title").getAsString();
+                        JsonArray jList = jPage.get("list").getAsJsonArray();
+
+                        JsonArray retArray = new JsonArray();
+                        for (int i = index; i < length && i < jList.size(); i++) {
+                            retArray.add(jList.get(i).getAsJsonObject());
+                        }
+                        JsonObject item = new JsonObject();
+                        item.addProperty("title", title);
+                        item.add("list", retArray);
+                        ret.add(item);
+                    }
+                }
+                jV33JsonArray = jArray;
+                return ret.toString();
+            } catch (Exception e) {
+                e.printStackTrace();
+                jV33JsonArray = null;
+            } finally {
+                try {
+                    os.close();
+                } catch (IOException e) {
+                }
+            }
+        } else {
+            JsonArray jArray = jV33JsonArray;
             JsonArray ret = new JsonArray();
-            JsonArray retArray = new JsonArray();
-            for (int i = index; i < length && i < jList.size(); i++) {
-                retArray.add(jList.get(i).getAsJsonObject());
+            if (page >= 0) {
+                JsonObject jPage = jArray.get(page).getAsJsonObject();
+                String title = jPage.get("title").getAsString();
+                JsonArray jList = jPage.get("list").getAsJsonArray();
+
+                JsonArray retArray = new JsonArray();
+                for (int i = index; i < index + length && i < jList.size(); i++) {
+                    retArray.add(jList.get(i).getAsJsonObject());
+                }
+                JsonObject item = new JsonObject();
+                item.addProperty("title", title);
+                item.add("list", retArray);
+                ret.add(item);
+            } else {
+                for (int j = 0; j < jArray.size(); j++) {
+                    JsonObject jPage = jArray.get(j).getAsJsonObject();
+                    String title = jPage.get("title").getAsString();
+                    JsonArray jList = jPage.get("list").getAsJsonArray();
+
+                    JsonArray retArray = new JsonArray();
+                    for (int i = index; i < length && i < jList.size(); i++) {
+                        retArray.add(jList.get(i).getAsJsonObject());
+                    }
+                    JsonObject item = new JsonObject();
+                    item.addProperty("title", title);
+                    item.add("list", retArray);
+                    ret.add(item);
+                }
             }
-            JsonObject item = new JsonObject();
-            item.addProperty("title", title);
-            item.add("list", retArray);
-            ret.add(item);
             return ret.toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                os.close();
-            } catch (IOException e) {
-            }
         }
         return null;
     }
