@@ -42,7 +42,7 @@ public class VideoController {
     }
 
     public Object v33(int page, int index, int length) {
-        String path = ResourceUtil.getResourcePath();
+        String path = ResourceUtil.getResourcePath(); // servletRequest.getRealPath("");同样能获取到基路径
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         System.out.println("VideoController v33 array " + (jV33JsonArray != null ? this.toString() : "null"));
         if (jV33JsonArray == null) {
